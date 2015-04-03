@@ -1,8 +1,8 @@
 <?php
 /**
- * Registers zeen101's Leak Paywall - Reporting Tool class
+ * Registers zeen101's Leaky Paywall - Reporting Tool class
  *
- * @package zeen101's Leak Paywall - Reporting Tool
+ * @package zeen101's Leaky Paywall - Reporting Tool
  * @since 1.0.0
  */
 
