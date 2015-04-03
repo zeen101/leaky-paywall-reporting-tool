@@ -2,7 +2,7 @@
 /**
  * Main PHP file used to for initial calls to zeen101's Leak Paywall Reporting Tool classes and functions.
  *
- * @package zeen101's Leak Paywall - Reporting Tool
+ * @package zeen101's Leaky Paywall - Reporting Tool
  * @since 1.0.0
  */
  
