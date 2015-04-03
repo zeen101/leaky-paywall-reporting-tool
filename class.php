@@ -97,13 +97,13 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 		
 		function admin_wp_enqueue_scripts( $hook_suffix ) {
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix )
-				wp_enqueue_script( 'lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array( 'jquery', 'jquery-ui-datepicker' ), ISSUEM_LP_UPAPI_VERSION );
+				wp_enqueue_script( 'lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array( 'jquery', 'jquery-ui-datepicker' ), LP_RT_VERSION );
 		}
 		
 		function admin_wp_print_styles() {
 			global $hook_suffix;
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix ) {
-				wp_enqueue_style( 'lp_reporting_tool_admin_css', LP_RT_URL . 'css/admin.css', '', ISSUEM_LP_UPAPI_VERSION );
+				wp_enqueue_style( 'lp_reporting_tool_admin_css', LP_RT_URL . 'css/admin.css', '', LP_RT_VERSION );
 				wp_enqueue_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 			}
 		}
