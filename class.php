@@ -169,7 +169,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 			                        <select name="subscription-level[]" multiple="multiple" size="5">
 			                        <?php
 			                        foreach( $settings['levels'] as $key => $level ) {
-				                        echo '<option value="' . $key .'" ' . selected( $key, $subscriber_level_id, true ) . '>' . stripslashes( $level['label'] ) . '</option>';
+				                        echo '<option value="' . $key .'">' . stripslashes( $level['label'] ) . '</option>';
 			                        }
 			                        ?>
 			                        </select>
