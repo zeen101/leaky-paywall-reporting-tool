@@ -132,7 +132,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                     
                     <p>1. If a subscriber was created while in test mode, Leaky Paywall must be in test mode to export the subscriber. If a subscriber was created while in live mode, Leaky Paywall must be in live mode to the export the subscriber.</p>
 
-					<p>2. To export all users, leave all fields blank.</p>
+					<p>2. To export all subscribers, leave all fields blank.</p>
 
                     <div id="modules" class="postbox">
                                             
