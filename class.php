@@ -61,6 +61,10 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 						}
 						
 						if ( !empty( $users ) ) {
+
+							global $no_lp_subscribers;
+							$no_lp_subscribers = false;
+
 							$user_meta = array();
 							foreach( $users as $user ) {
 								$user_meta[$user->ID]['user_id'] = $user->ID;
@@ -81,6 +85,9 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 								leaky_paywall_reporting_tool_csv_export_file( $user_meta );
 								die();
 							}
+						} else {
+							global $no_lp_subscribers;
+							$no_lp_subscribers = true;
 						}
 											
 					} else {
@@ -129,6 +136,15 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                 <form id="issuem" method="post" action="">
 
                     <h2 style='margin-bottom: 10px;' ><?php _e( "Leaky Paywall - Reporting Tool", 'lp-reporting-tool' ); ?></h2>
+
+                    <?php
+                    	global $no_lp_subscribers;
+						if ( $no_lp_subscribers == true ) {
+							echo '<div class="updated">';
+							echo '<p>No subscribers matched your search.</p>';
+							echo '</div>';
+						}
+                    ?>
                     
                     <p>1. If a subscriber was created while in test mode, Leaky Paywall must be in test mode to export the subscriber. If a subscriber was created while in live mode, Leaky Paywall must be in live mode to the export the subscriber.</p>
 
