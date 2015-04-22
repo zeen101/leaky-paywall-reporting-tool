@@ -18,10 +18,10 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			$mode = 'off' === $settings['test_mode'] ? 'live' : 'test';
 			$args['meta_query'] = array( 
 				'relation' => 'AND',
-				array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_hash',
-					'compare' => 'EXISTS',
-				),
+				// array(
+				// 	'key'     => '_issuem_leaky_paywall_' . $mode . '_hash',
+				// 	'compare' => 'EXISTS',
+				// ),
 			);
 			
 			if ( !empty( $post['expire-start' ] ) ) {
