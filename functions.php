@@ -11,6 +11,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 	 * @return mixed $wpdb var or false if invalid hash
 	 */
 	function leaky_paywall_reporting_tool_query( $post ) {
+		global $is_leaky_paywall, $which_leaky_paywall;
 	
 		if ( !empty( $post ) ) {
 			
@@ -19,14 +20,14 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			$args['meta_query'] = array( 
 				'relation' => 'AND',
 				array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_hash',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_hash',
 					'compare' => 'EXISTS',
 				),
 			);
 			
 			if ( !empty( $post['expire-start' ] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_expires',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_expires',
 					'value'   => date( 'Y-m-d 23:59:59', strtotime( $post['expire-start' ] ) ),
 					'type'    => 'DATE',
 					'compare' => '>='
@@ -34,7 +35,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			}
 			if ( !empty( $post['expire-end' ] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_expires',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_expires',
 					'value'   => date( 'Y-m-d 23:59:59', strtotime( $post['expire-end' ] ) ),
 					'type'    => 'DATE',
 					'compare' => '<='
@@ -43,7 +44,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			
 			if ( !empty( $post['subscription-level'] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_level_id',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_level_id',
 					'value'   => $post['subscription-level'],
 					'type'    => 'NUMERIC',
 					'compare' => 'IN'
@@ -51,7 +52,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			}
 			if ( !empty( $post['subscriber-status'] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_status',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_payment_status',
 					'value'   => $post['subscriber-status'],
 					'type'    => 'CHAR',
 					'compare' => 'IN'
@@ -60,13 +61,13 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			
 			if ( !empty( $post['price'] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_price',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_price',
 					'value'   => $post['price'],
 				);
 			}
 			if ( !empty( $post['payment-method'] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_gateway',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_payment_gateway',
 					'value'   => $post['payment-method'],
 					'type'    => 'CHAR',
 					'compare' => 'IN'
@@ -74,7 +75,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			}
 			if ( !empty( $post['subscriber-id'] ) ) {
 				$args['meta_query'][] = array(
-					'key'     => '_issuem_leaky_paywall_' . $mode . '_subscriber_id',
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_id',
 					'value'   => $post['subscriber-id'],
 					'compare' => 'LIKE',
 				);
@@ -84,7 +85,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 					if ( !empty( $meta_key ) ) {
 						if ( !empty( $value ) ) {
 							$args['meta_query'][] = array(
-								'key'     => '_issuem_leaky_paywall_' . $mode . '_subscriber_meta_' . $meta_key,
+								'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_meta_' . $meta_key,
 								'value'   => $value,
 								'compare' => 'LIKE',
 							);

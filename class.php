@@ -61,17 +61,18 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 						}
 						
 						if ( !empty( $users ) ) {
+							global $is_leaky_paywall, $which_leaky_paywall;
 							$user_meta = array();
 							foreach( $users as $user ) {
 								$user_meta[$user->ID]['user_id'] = $user->ID;
 								$user_meta[$user->ID]['user_login'] = $user->data->user_login;
 								$user_meta[$user->ID]['user_email'] = $user->data->user_email;
 								foreach( $meta as $key ) {
-									$user_meta[$user->ID][$key] = get_user_meta( $user->ID, '_issuem_leaky_paywall_' . $mode . '_' . $key, true );
+									$user_meta[$user->ID][$key] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_' . $key, true );
 								}
 								if ( !empty( $custom_meta_fields['meta_keys'] ) ) {
 									foreach( $custom_meta_fields['meta_keys'] as $meta_key ) {
-										$user_meta[$user->ID][$meta_key['name']] = get_user_meta( $user->ID, '_issuem_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ), true );
+										$user_meta[$user->ID][$meta_key['name']] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ), true );
 									}
 								}
 							}
