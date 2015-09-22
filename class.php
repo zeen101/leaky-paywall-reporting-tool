@@ -1,8 +1,8 @@
 <?php
 /**
- * Registers zeen101's Leak Paywall - Reporting Tool class
+ * Registers zeen101's Leaky Paywall - Reporting Tool class
  *
- * @package zeen101's Leak Paywall - Reporting Tool
+ * @package zeen101's Leaky Paywall - Reporting Tool
  * @since 1.0.0
  */
 
@@ -61,7 +61,9 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 						}
 						
 						if ( !empty( $users ) ) {
-							global $is_leaky_paywall, $which_leaky_paywall;
+							global $is_leaky_paywall, $which_leaky_paywall, $no_lp_subscribers;
+							$no_lp_subscribers = false;
+
 							$user_meta = array();
 							foreach( $users as $user ) {
 								$user_meta[$user->ID]['user_id'] = $user->ID;
@@ -82,6 +84,9 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 								leaky_paywall_reporting_tool_csv_export_file( $user_meta );
 								die();
 							}
+						} else {
+							global $no_lp_subscribers;
+							$no_lp_subscribers = true;
 						}
 											
 					} else {
@@ -98,13 +103,13 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 		
 		function admin_wp_enqueue_scripts( $hook_suffix ) {
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix )
-				wp_enqueue_script( 'lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array( 'jquery', 'jquery-ui-datepicker' ), ISSUEM_LP_UPAPI_VERSION );
+				wp_enqueue_script( 'lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array( 'jquery', 'jquery-ui-datepicker' ), LP_RT_VERSION );
 		}
 		
 		function admin_wp_print_styles() {
 			global $hook_suffix;
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix ) {
-				wp_enqueue_style( 'lp_reporting_tool_admin_css', LP_RT_URL . 'css/admin.css', '', ISSUEM_LP_UPAPI_VERSION );
+				wp_enqueue_style( 'lp_reporting_tool_admin_css', LP_RT_URL . 'css/admin.css', '', LP_RT_VERSION );
 				wp_enqueue_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 			}
 		}
@@ -130,12 +135,29 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                 <form id="issuem" method="post" action="">
 
                     <h2 style='margin-bottom: 10px;' ><?php _e( "Leaky Paywall - Reporting Tool", 'lp-reporting-tool' ); ?></h2>
+
+                    <?php
+                    	global $no_lp_subscribers;
+						if ( $no_lp_subscribers == true ) {
+							echo '<div class="updated">';
+							echo '<p>No subscribers matched your search.</p>';
+							echo '</div>';
+						}
+                    ?>
                     
+                    <p>1. If a subscriber was created while in test mode, Leaky Paywall must be in test mode to export the subscriber. If a subscriber was created while in live mode, Leaky Paywall must be in live mode to the export the subscriber.</p>
+
+					<p>2. To export all subscribers, leave all fields blank.</p>
+
                     <div id="modules" class="postbox">
                                             
                         <div class="inside">
+
+                       
+
+
                         
-                        <table id="reporting_tool_table" class="reporting-tool-table">
+                        <table id="reporting_tool_table" class="reporting-tool-table form-table">
 
                         	<tr>
                                 <th><?php _e( 'Price', 'lp-reporting-tool' ); ?></th>
@@ -162,7 +184,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 			                        <select name="subscription-level[]" multiple="multiple" size="5">
 			                        <?php
 			                        foreach( $settings['levels'] as $key => $level ) {
-				                        echo '<option value="' . $key .'" ' . selected( $key, $subscriber_level_id, true ) . '>' . stripslashes( $level['label'] ) . '</option>';
+				                        echo '<option value="' . $key .'">' . stripslashes( $level['label'] ) . '</option>';
 			                        }
 			                        ?>
 			                        </select>

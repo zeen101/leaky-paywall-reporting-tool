@@ -17,13 +17,13 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			
 			$settings = get_leaky_paywall_settings();
 			$mode = 'off' === $settings['test_mode'] ? 'live' : 'test';
-			$args['meta_query'] = array( 
-				'relation' => 'AND',
-				array(
-					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_hash',
-					'compare' => 'EXISTS',
-				),
-			);
+			//$args['meta_query'] = array( 
+			//	'relation' => 'AND',
+				// array(
+				// 	'key'     => '_issuem_leaky_paywall_' . $mode . '_hash',
+				// 	'compare' => 'EXISTS',
+				// ),
+			//);
 			
 			if ( !empty( $post['expire-start' ] ) ) {
 				$args['meta_query'][] = array(
