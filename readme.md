@@ -6,6 +6,9 @@ A premium WordPress plugin by zeen101 for Leaky Paywall. Adds the ability to exp
 
 ## Changelog 
 
+**1.2.0**
+* Update for new public release of Leaky Paywall
+
 **1.1.0**
 * Add documentation to settings page
 * Remove need to check for a hash
