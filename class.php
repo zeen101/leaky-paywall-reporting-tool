@@ -24,7 +24,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 			
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_wp_enqueue_scripts' ) );
 			add_action( 'admin_print_styles', array( $this, 'admin_wp_print_styles' ) );
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_action( 'admin_menu', array( $this, 'admin_menu' ), 15 );
 									
 			add_action( 'admin_init', array( $this, 'process_requests' ), 15 );
 
