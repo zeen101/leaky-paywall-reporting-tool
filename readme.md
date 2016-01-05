@@ -6,6 +6,9 @@ A premium WordPress plugin by zeen101 for Leaky Paywall. Adds the ability to exp
 
 ## Changelog 
 
+**1.2.1**
+* Fix menu priority
+
 **1.2.0**
 * Update for new public release of Leaky Paywall
 
