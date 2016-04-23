@@ -2,9 +2,12 @@
 
 ## Description
 
-A premium WordPress plugin by zeen101 for Leaky Paywall. Adds the ability to export subscribers into a CSV file. 
+A premium WordPress plugin by zeen101 for Leaky Paywall. Adds the ability to export subscribers into a CSV file.
 
-## Changelog 
+## Changelog
+
+**1.2.2**
+* Fix export metadata bug
 
 **1.2.1**
 * Fix menu priority
