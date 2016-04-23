@@ -1,5 +1,5 @@
 <?php
-	
+
 if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 
 	/**
@@ -7,24 +7,19 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array $args Leaky Paywall Subscribers
+	 * @param array $post POST data from reporting form
 	 * @return mixed $wpdb var or false if invalid hash
 	 */
 	function leaky_paywall_reporting_tool_query( $post ) {
 		global $is_leaky_paywall, $which_leaky_paywall;
-	
+
 		if ( !empty( $post ) ) {
-			
+
+			$args = array();
+
 			$settings = get_leaky_paywall_settings();
 			$mode = 'off' === $settings['test_mode'] ? 'live' : 'test';
-			//$args['meta_query'] = array( 
-			//	'relation' => 'AND',
-				// array(
-				// 	'key'     => '_issuem_leaky_paywall_' . $mode . '_hash',
-				// 	'compare' => 'EXISTS',
-				// ),
-			//);
-			
+
 			if ( !empty( $post['expire-start' ] ) ) {
 				$args['meta_query'][] = array(
 					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_expires',
@@ -41,7 +36,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 					'compare' => '<='
 				);
 			}
-			
+
 			if ( !empty( $post['subscription-level'] ) ) {
 				$args['meta_query'][] = array(
 					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_level_id',
@@ -58,7 +53,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 					'compare' => 'IN'
 				);
 			}
-			
+
 			if ( !empty( $post['price'] ) ) {
 				$args['meta_query'][] = array(
 					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_price',
@@ -93,33 +88,33 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 					}
 				}
 			}
-			
+
 			$users = get_users( $args );
 			return $users;
 
 		}
-		
+
 		return false;
-		
+
 	}
-	
+
 }
 
 if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_headers' ) ) {
-	
+
 	function leaky_paywall_reporting_tool_csv_export_headers() {
-		
+
 	    $now = gmdate("D, d M Y H:i:s");
 	    $filename = 'leaky-paywall-report-' . time() . '.csv';
 	    header( 'Expires: Tue, 03 Jul 2001 06:00:00 GMT' );
 	    header( 'Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate ');
 	    header( 'Last-Modified: ' . $now . ' GMT ');
-	
-	    // force download  
+
+	    // force download
 	    header( 'Content-Type: application/force-download' );
 	    header( 'Content-Type: application/octet-stream' );
 	    header( 'Content-Type: application/download' );
-	
+
 	    // disposition / encoding on response body
 	    header( 'Content-Disposition: attachment;filename="' . $filename . '"' );
 	    header( 'Content-Transfer-Encoding: binary' );
@@ -128,13 +123,13 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_headers' ) ) {
 }
 
 if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_file' ) ) {
-	
+
 	function leaky_paywall_reporting_tool_csv_export_file( $content_array ) {
-		
+
 		if ( 0 == count( $content_array ) ) {
 			return null;
 		}
-				
+
 		ob_start();
 		$f = fopen( 'php://output', 'w' );
 		fputcsv( $f, array_keys( reset( $content_array ) ) );
@@ -142,7 +137,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_file' ) ) {
 			fputcsv( $f, $row );
 		}
 		fclose( $f );
-		
+
 		echo ob_get_clean();
 
 	}
