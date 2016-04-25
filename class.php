@@ -12,36 +12,36 @@
  * @since 1.0.0
  */
 if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
-	
+
 	class Leaky_Paywall_Reporting_tool {
-		
+
 		/**
 		 * Class constructor, puts things in motion
 		 *
 		 * @since 1.0.0
 		 */
-		function __construct() {
-			
+		public function __construct() {
+
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_wp_enqueue_scripts' ) );
 			add_action( 'admin_print_styles', array( $this, 'admin_wp_print_styles' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ), 15 );
-									
+
 			add_action( 'admin_init', array( $this, 'process_requests' ), 15 );
 
 		}
-		
-		function process_requests() {
-			
+
+		public function process_requests() {
+
 			if ( is_admin() && current_user_can( apply_filters( 'manage_leaky_paywall_settings', 'manage_options' ) ) ) {
-				
+
 				if ( !empty( $_POST['leaky_paywall_reporting_tool_nonce'] ) ) {
-				
+
 					if ( wp_verify_nonce( $_POST['leaky_paywall_reporting_tool_nonce'], 'submit_leaky_paywall_reporting_tool' ) ) {
-						
+
 						$settings = get_leaky_paywall_settings();
 						$mode = 'off' === $settings['test_mode'] ? 'live' : 'test';
 						$users = leaky_paywall_reporting_tool_query( $_POST );
-				
+
 						$meta = array(
 							'level_id',
 							'hash',
@@ -54,12 +54,12 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 							'payment_gateway',
 							'payment_status',
 						);
-						
-                        if ( is_plugin_active( 'leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php' ) ) { 
+
+                        if ( is_plugin_active( 'leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php' ) ) {
 	                        global $dl_pluginissuem_leaky_paywall_subscriber_meta;
 	                        $custom_meta_fields = $dl_pluginissuem_leaky_paywall_subscriber_meta->get_settings();
 						}
-						
+
 						if ( !empty( $users ) ) {
 							global $is_leaky_paywall, $which_leaky_paywall, $no_lp_subscribers;
 							$no_lp_subscribers = false;
@@ -78,7 +78,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 									}
 								}
 							}
-							
+
 							if ( !empty( $user_meta ) ) {
 								leaky_paywall_reporting_tool_csv_export_headers();
 								leaky_paywall_reporting_tool_csv_export_file( $user_meta );
@@ -88,50 +88,50 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 							global $no_lp_subscribers;
 							$no_lp_subscribers = true;
 						}
-											
+
 					} else {
-						
+
 						wp_die( 'Unable to verify Leaky Paywall Reporting Tool security token. Please try again.' );
-						
+
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
-		function admin_wp_enqueue_scripts( $hook_suffix ) {
+
+		public function admin_wp_enqueue_scripts( $hook_suffix ) {
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix )
 				wp_enqueue_script( 'lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array( 'jquery', 'jquery-ui-datepicker' ), LP_RT_VERSION );
 		}
-		
-		function admin_wp_print_styles() {
+
+		public function admin_wp_print_styles() {
 			global $hook_suffix;
 			if ( 'leaky-paywall_page_reporting-tool' === $hook_suffix ) {
 				wp_enqueue_style( 'lp_reporting_tool_admin_css', LP_RT_URL . 'css/admin.css', '', LP_RT_VERSION );
 				wp_enqueue_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 			}
 		}
-		
-		function admin_menu() {
+
+		public function admin_menu() {
 			add_submenu_page( 'issuem-leaky-paywall', __( 'Reporting Tool', 'lp-reporting-tool' ), __( 'Reporting Tool', 'lp-reporting-tool' ), apply_filters( 'manage_leaky_paywall_settings', 'manage_options' ), 'reporting-tool', array( $this, 'reporting_page' ) );
 		}
-				
+
 		/**
 		 * Create and Display Leaky Paywall Reporting Tool page
 		 *
 		 * @since 1.0.0
 		 */
-		function reporting_page() {
-			
+		public function reporting_page() {
+
 			$settings = get_leaky_paywall_settings();
 			?>
 			<div class=wrap>
             <div style="width:70%;" class="postbox-container">
-            <div class="metabox-holder">	
+            <div class="metabox-holder">
             <div class="meta-box-sortables ui-sortable">
-            
+
                 <form id="issuem" method="post" action="">
 
                     <h2 style='margin-bottom: 10px;' ><?php _e( "Leaky Paywall - Reporting Tool", 'lp-reporting-tool' ); ?></h2>
@@ -144,19 +144,19 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 							echo '</div>';
 						}
                     ?>
-                    
+
                     <p>1. If a subscriber was created while in test mode, Leaky Paywall must be in test mode to export the subscriber. If a subscriber was created while in live mode, Leaky Paywall must be in live mode to the export the subscriber.</p>
 
 					<p>2. To export all subscribers, leave all fields blank.</p>
 
                     <div id="modules" class="postbox">
-                                            
+
                         <div class="inside">
 
-                       
 
 
-                        
+
+
                         <table id="reporting_tool_table" class="reporting-tool-table form-table">
 
                         	<tr>
@@ -209,7 +209,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 										$payment_gateways = leaky_paywall_payment_gateways();
 										foreach( $payment_gateways as $key => $gateway ) {
 											echo '<option value="' . $key . '">' . $gateway . '</option>';
-										}										
+										}
 										?>
 			                        </select>
                                 </td>
@@ -220,12 +220,12 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                                 	<input type="text" id="subscriber-id" name="subscriber-id" value="" />
                                 </td>
                             </tr>
-                            
-                            <?php 
-	                        if ( is_plugin_active( 'leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php' ) ) { 
+
+                            <?php
+	                        if ( is_plugin_active( 'leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php' ) ) {
 		                        global $dl_pluginissuem_leaky_paywall_subscriber_meta;
 		                        $custom_meta_fields = $dl_pluginissuem_leaky_paywall_subscriber_meta->get_settings();
-		                        
+
 		                        if ( !empty( $custom_meta_fields['meta_keys'] ) ) {
 			                        foreach ( $custom_meta_fields['meta_keys'] as $meta_key ) {
 				                		$label = $meta_key['name'];
@@ -239,30 +239,30 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 			                            </tr>
 				                        <?php
 			                        }
-		                        }  
+		                        }
 		                    }
                             ?>
-                            
+
                         </table>
-                                                                          
+
                         <p class="submit">
                             <input class="button-primary" type="submit" name="generate_leaky_paywall_report" value="<?php _e( 'Generate Report', 'lp-reporting-tool' ) ?>" />
                         </p>
 
                         </div>
-                        
+
                     </div>
-                    
-                    <?php wp_nonce_field( 'submit_leaky_paywall_reporting_tool', 'leaky_paywall_reporting_tool_nonce' ); ?>             
-                    
+
+                    <?php wp_nonce_field( 'submit_leaky_paywall_reporting_tool', 'leaky_paywall_reporting_tool_nonce' ); ?>
+
                 </form>
-                
+
             </div>
             </div>
             </div>
 			</div>
 			<?php
-		}	
+		}
 
 	}
 

@@ -5,13 +5,13 @@
  * @package zeen101's Leaky Paywall - Reporting Tool
  * @since 1.0.0
  */
- 
+
 /*
 Plugin Name: Leaky Paywall - Reporting Tool
 Plugin URI: http://zeen101.com/
 Description: A premium WordPress plugin by zeen101.
 Author: zeen101 Development Team
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://zeen101.com/
 Tags:
 */
@@ -19,10 +19,10 @@ Tags:
 //Define global variables...
 if ( !defined( 'ZEEN101_STORE_URL' ) )
 	define( 'ZEEN101_STORE_URL',	'http://zeen101.com' );
-	
+
 define( 'LP_RT_NAME', 		'Leaky Paywall - Reporting Tool' );
 define( 'LP_RT_SLUG', 		'lp-reporting-tool' );
-define( 'LP_RT_VERSION', 	'1.2.1' );
+define( 'LP_RT_VERSION', 	'1.2.2' );
 define( 'LP_RT_DB_VERSION', '1.0.0' );
 define( 'LP_RT_URL', 		plugin_dir_url( __FILE__ ) );
 define( 'LP_RT_PATH', 		plugin_dir_path( __FILE__ ) );
@@ -37,13 +37,10 @@ define( 'LP_RT_REL_DIR', 	dirname( LP_RT_BASENAME ) );
 function leaky_paywall_reporting_tool_plugins_loaded() {
 	global $is_leaky_paywall, $which_leaky_paywall;
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	
-	if ( is_plugin_active( 'issuem-leaky-paywall/issuem-leaky-paywall.php' ) ) {
+
+	if ( is_plugin_active( 'issuem-leaky-paywall/issuem-leaky-paywall.php' ) || is_plugin_active( 'leaky-paywall/leaky-paywall.php' ) ) {
 		$is_leaky_paywall = true;
 		$which_leaky_paywall = '_issuem';
-	} else if ( is_plugin_active( 'leaky-paywall/leaky-paywall.php' ) ) {
-		$is_leaky_paywall = true;
-		$which_leaky_paywall = '';
 	} else {
 		$is_leaky_paywall = false;
 		$which_leaky_paywall = '';
@@ -52,25 +49,25 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 	if ( !empty( $is_leaky_paywall ) ) {
 
 		require_once( 'class.php' );
-	
+
 		// Instantiate the Pigeon Pack class
 		if ( class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
-			
+
 			global $leaky_paywall_reporting_tool;
-			
+
 			$leaky_paywall_reporting_tool = new Leaky_Paywall_Reporting_tool();
-			
+
 			require_once( 'functions.php' );
 
 			//Internationalization
 			load_plugin_textdomain( 'lp-reporting-tool', false, LP_RT_REL_DIR . '/i18n/' );
-				
+
 		}
-	
+
 	} else {
-	
+
 		add_action( 'admin_notices', 'leaky_paywall_reporting_tool_requirement_nag' );
-		
+
 	}
 
 }
