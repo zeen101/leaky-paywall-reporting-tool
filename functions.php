@@ -15,7 +15,9 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 
 		if ( !empty( $post ) ) {
 
-			$args = array();
+			$args = array(
+				'role'	=> 'subscriber'
+			);
 
 			$settings = get_leaky_paywall_settings();
 			$mode = 'off' === $settings['test_mode'] ? 'live' : 'test';

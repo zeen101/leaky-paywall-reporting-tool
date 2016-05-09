@@ -60,6 +60,14 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 	                        $custom_meta_fields = $dl_pluginissuem_leaky_paywall_subscriber_meta->get_settings();
 						}
 
+						global $blog_id;
+						if ( is_multisite_premium() && !is_main_site( $blog_id ) ){
+							$site = '_' . $blog_id;
+						} else {
+							$site = '';
+						}
+
+
 						if ( !empty( $users ) ) {
 							global $is_leaky_paywall, $which_leaky_paywall, $no_lp_subscribers;
 							$no_lp_subscribers = false;
@@ -70,12 +78,15 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 								$user_meta[$user->ID]['user_login'] = $user->data->user_login;
 								$user_meta[$user->ID]['user_email'] = $user->data->user_email;
 								foreach( $meta as $key ) {
-									$user_meta[$user->ID][$key] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_' . $key, true );
+									$user_meta[$user->ID][$key] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_' . $key . $site, true );
 								}
 								if ( !empty( $custom_meta_fields['meta_keys'] ) ) {
+
 									foreach( $custom_meta_fields['meta_keys'] as $meta_key ) {
-										$user_meta[$user->ID][$meta_key['name']] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ), true );
+										$user_meta[$user->ID][$meta_key['name']] = get_user_meta( $user->ID, $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ) . $site, true );
 									}
+
+									echo $which_leaky_paywall . '_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ) . $site . "<br>";
 								}
 							}
 

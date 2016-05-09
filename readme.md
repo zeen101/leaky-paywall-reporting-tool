@@ -6,6 +6,10 @@ A premium WordPress plugin by zeen101 for Leaky Paywall. Adds the ability to exp
 
 ## Changelog
 
+**1.2.3**
+* Fixed multisite export bug
+* Export now only exports users of the subscriber role
+
 **1.2.2**
 * Fix export metadata bug
 
