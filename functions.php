@@ -145,18 +145,20 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_file' ) ) {
 	}
 }
 
-function get_leaky_user_meta( $user_id, $key ){
-	global $which_leaky_paywall;
+if ( !function_exists( 'get_leaky_user_meta' ) ) {
+	function get_leaky_user_meta( $user_id, $key ){
+		global $which_leaky_paywall;
 
-	// Try for the new meta string first
-	$meta = get_user_meta( $user_id, $which_leaky_paywall . $key, true );
+		// Try for the new meta string first
+		$meta = get_user_meta( $user_id, $which_leaky_paywall . $key, true );
 
-	// If that returned nothing, try for an un-prefixed meta string
-	if ( empty( $meta ) ){
-		$meta = get_user_meta( $user_id, $key, true );
+		// If that returned nothing, try for an un-prefixed meta string
+		if ( empty( $meta ) ){
+			$meta = get_user_meta( $user_id, $key, true );
+		}
+
+		// Return whichever result returned, if any
+		return $meta;
+
 	}
-
-	// Return whichever result returned, if any
-	return $meta;
-
 }
