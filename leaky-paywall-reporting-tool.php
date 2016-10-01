@@ -41,6 +41,7 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 	if ( is_plugin_active( 'issuem-leaky-paywall/issuem-leaky-paywall.php' ) || is_plugin_active( 'leaky-paywall/leaky-paywall.php' ) ) {
 		$is_leaky_paywall = true;
 		$which_leaky_paywall = '_issuem';
+		
 	} else {
 		$is_leaky_paywall = false;
 		$which_leaky_paywall = '';

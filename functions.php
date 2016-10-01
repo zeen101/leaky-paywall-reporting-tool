@@ -11,9 +11,10 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 	 * @return mixed $wpdb var or false if invalid hash
 	 */
 	function leaky_paywall_reporting_tool_query( $post ) {
-		global $is_leaky_paywall, $which_leaky_paywall;
 
 		if ( !empty( $post ) ) {
+
+			$which_leaky_paywall = '_issuem';
 
 			$args = array(
 				'role'	=> 'subscriber'
@@ -162,7 +163,8 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_csv_export_file' ) ) {
  */
 if ( !function_exists( 'get_leaky_user_meta' ) ) {
 	function get_leaky_user_meta( $user_id, $key ){
-		global $which_leaky_paywall;
+
+		$which_leaky_paywall = '_issuem';
 
 		// Try for the new meta string first
 		$meta = get_user_meta( $user_id, $which_leaky_paywall . $key, true );
