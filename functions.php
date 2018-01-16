@@ -173,8 +173,13 @@ if ( !function_exists( 'get_leaky_user_meta' ) ) {
 
 		// If that returned nothing, try for an un-prefixed meta string
 		if ( empty( $meta ) ){
+				$meta = get_user_meta( $user_id, $which_leaky_paywall . $key . '_all', true);
+
+			if( empty( $meta ) ){
 			$meta = get_user_meta( $user_id, $key, true );
+			}
 		}
+
 
 		// Return whichever result returned, if any
 		return $meta;
