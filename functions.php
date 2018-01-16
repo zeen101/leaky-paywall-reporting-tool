@@ -92,6 +92,8 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 				}
 			}
 
+			$args = apply_filters( 'leaky_paywall_reporting_tool_pre_users', $args, $mode, $which_leaky_paywall );
+
 			$users = get_users( $args );
 			return $users;
 
@@ -171,8 +173,13 @@ if ( !function_exists( 'get_leaky_user_meta' ) ) {
 
 		// If that returned nothing, try for an un-prefixed meta string
 		if ( empty( $meta ) ){
+				$meta = get_user_meta( $user_id, $which_leaky_paywall . $key . '_all', true);
+
+			if( empty( $meta ) ){
 			$meta = get_user_meta( $user_id, $key, true );
+			}
 		}
+
 
 		// Return whichever result returned, if any
 		return $meta;
