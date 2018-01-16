@@ -92,6 +92,8 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 				}
 			}
 
+			$args = apply_filters( 'leaky_paywall_reporting_tool_pre_users', $args, $mode, $which_leaky_paywall );
+
 			$users = get_users( $args );
 			return $users;
 

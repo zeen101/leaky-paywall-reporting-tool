@@ -55,6 +55,8 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 							'payment_status',
 						);
 
+						$meta = apply_filters('leaky_paywall_reporting_tool_meta', $meta);
+
                         if ( is_plugin_active( 'leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php' ) ) {
 	                        global $dl_pluginissuem_leaky_paywall_subscriber_meta;
 	                        $custom_meta_fields = $dl_pluginissuem_leaky_paywall_subscriber_meta->get_settings();
