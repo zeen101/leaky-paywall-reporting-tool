@@ -88,6 +88,9 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 										$user_meta[$user->ID][$meta_key['name']] = get_leaky_user_meta( $user->ID, '_leaky_paywall_' . $mode . '_subscriber_meta_' . sanitize_title_with_dashes( $meta_key['name'] ) . $site );
 									}
 								}
+
+								$user_meta = apply_filters( 'leaky_paywall_reporting_tool_user_meta', $user_meta, $user->ID );
+								
 							}
 
 							if ( !empty( $user_meta ) ) {
