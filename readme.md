@@ -6,6 +6,9 @@ A plugin that adds the ability to export Leaky Paywall subscribers into a CSV fi
 
 ## Changelog
 
+**1.2.6**
+* Add first and last name to csv output
+
 **1.2.5**
 * Add leaky_paywall_reporting_tool_user_meta filter so that user meta without _leaky_paywall_ prefix can be added to the export file
 

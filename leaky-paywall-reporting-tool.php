@@ -11,7 +11,7 @@ Plugin Name: Leaky Paywall - Reporting Tool
 Plugin URI: http://zeen101.com/
 Description: A plugin that adds the ability to export Leaky Paywall subscribers into a CSV file.
 Author: zeen101 Development Team
-Version: 1.2.5
+Version: 1.2.6
 Author URI: https://zeen101.com/
 Tags: 
 */
@@ -22,7 +22,7 @@ if ( !defined( 'ZEEN101_STORE_URL' ) )
 
 define( 'LP_RT_NAME', 		'Leaky Paywall - Reporting Tool' );
 define( 'LP_RT_SLUG', 		'lp-reporting-tool' );
-define( 'LP_RT_VERSION', 	'1.2.5' );
+define( 'LP_RT_VERSION', 	'1.2.6' );
 define( 'LP_RT_DB_VERSION', '1.0.0' );
 define( 'LP_RT_URL', 		plugin_dir_url( __FILE__ ) );
 define( 'LP_RT_PATH', 		plugin_dir_path( __FILE__ ) );
