@@ -79,6 +79,8 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 								$user_meta[$user->ID]['user_id'] = $user->ID;
 								$user_meta[$user->ID]['user_login'] = $user->data->user_login;
 								$user_meta[$user->ID]['user_email'] = $user->data->user_email;
+								$user_meta[$user->ID]['first_name'] = $user->first_name;
+								$user_meta[$user->ID]['last_name'] = $user->last_name;
 								foreach( $meta as $key ) {
 									$user_meta[$user->ID][$key] = get_leaky_user_meta( $user->ID, '_leaky_paywall_' . $mode . '_' . $key . $site );
 								}
