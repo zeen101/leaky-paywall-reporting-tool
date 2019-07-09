@@ -17,7 +17,7 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			$which_leaky_paywall = '_issuem';
 
 			$args = array(
-				'role'	=> 'subscriber'
+				'role__not_in'	=> 'administrator'
 			);
 
 			$settings = get_leaky_paywall_settings();
@@ -47,7 +47,14 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 					'type'    => 'NUMERIC',
 					'compare' => 'IN'
 				);
+			} else {
+				$args['meta_query'][] = array(
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_level_id',
+					'compare' => 'EXISTS'
+				);
 			}
+
+
 			if ( !empty( $post['subscriber-status'] ) ) {
 				$args['meta_query'][] = array(
 					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_payment_status',
