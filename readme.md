@@ -6,6 +6,9 @@ A plugin that adds the ability to export Leaky Paywall subscribers into a CSV fi
 
 ## Changelog
 
+**1.3.0**
+* Load anyone who does not have an administrator role and has a level_id
+
 **1.2.6**
 * Add first and last name to csv output
 
