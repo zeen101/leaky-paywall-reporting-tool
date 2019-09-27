@@ -187,6 +187,13 @@ if ( !function_exists( 'get_leaky_user_meta' ) ) {
 			}
 		}
 
+		if ( $key == '_leaky_paywall_live_created' ) {
+			if ( is_numeric($meta) && (int)$meta == $meta ) { // is timestamp
+				$date = date( 'Y-M-d H:i:s', $meta );
+				$meta = $date;
+			} 
+		}
+
 
 		// Return whichever result returned, if any
 		return $meta;
