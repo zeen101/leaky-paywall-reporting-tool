@@ -169,16 +169,14 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 
                         <div class="inside">
 
-
-
-
-
                         <table id="reporting_tool_table" class="reporting-tool-table form-table">
 
                         	<tr>
-                                <th><?php _e( 'Price', 'lp-reporting-tool' ); ?></th>
+                                <th><?php _e( 'Created Date Range', 'lp-reporting-tool' ); ?></th>
                                 <td>
-                                	<input type="text" id="price" name="price" value="" />
+                                	<input type="text" id="created-start" name="created-start" value="" />
+                                	&nbsp; &mdash; &nbsp;
+                                	<input type="text" id="created-end" name="created-end" value="" />	
                                 </td>
                             </tr>
                         	<tr>
@@ -192,6 +190,12 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 									$jquery_date_format = leaky_paywall_jquery_datepicker_format( $date_format );
 									?>
                                 	<input type="hidden" name="date_format" value="<?php echo $jquery_date_format; ?>" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><?php _e( 'Price', 'lp-reporting-tool' ); ?></th>
+                                <td>
+                                	<input type="text" id="price" name="price" value="" />
                                 </td>
                             </tr>
                         	<tr>

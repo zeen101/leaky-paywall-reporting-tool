@@ -40,6 +40,24 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 				);
 			}
 
+			if ( !empty( $post['created-start' ] ) ) {
+				$args['meta_query'][] = array(
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_created',
+					'value'   => date( 'Y-m-d 23:59:59', strtotime( $post['created-start' ] ) ),
+					'type'    => 'DATE',
+					'compare' => '>='
+				);
+			}
+
+			if ( !empty( $post['created-end' ] ) ) {
+				$args['meta_query'][] = array(
+					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_created',
+					'value'   => date( 'Y-m-d 23:59:59', strtotime( $post['created-end' ] ) ),
+					'type'    => 'DATE',
+					'compare' => '<='
+				);
+			}
+
 			if ( !empty( $post['subscription-level'] ) ) {
 				$args['meta_query'][] = array(
 					'key'     => $which_leaky_paywall . '_leaky_paywall_' . $mode . '_level_id',

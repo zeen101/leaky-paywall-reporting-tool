@@ -15,5 +15,17 @@ $leaky_paywall_reporting_tool(document).ready(function($) {
 		minDate: 0,
 		dateFormat: $( 'input[name=date_format]' ).val()
 	});
+
+	$( '#created-start' ).datepicker({
+		prevText: '',
+		nextText: '',
+		dateFormat: $( 'input[name=date_format]' ).val()
+	});
+	
+	$( '#created-end' ).datepicker({
+		prevText: '',
+		nextText: '',
+		dateFormat: $( 'input[name=date_format]' ).val()
+	});
 	
 });
