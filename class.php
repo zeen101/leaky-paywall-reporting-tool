@@ -211,7 +211,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 	                        	</td>
                             </tr>
                         	<tr>
-                                <th><?php _e( 'Subscription Status', 'lp-reporting-tool' ); ?></th>
+                                <th><?php _e( 'Payment Status', 'lp-reporting-tool' ); ?></th>
                                 <td>
 			                        <select name="subscriber-status[]" multiple="multiple" size="4">
 			                            <option value="active"><?php _e( 'Active', 'lp-reporting-tool' ); ?></option>
