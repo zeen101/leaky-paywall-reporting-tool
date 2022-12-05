@@ -165,9 +165,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 
 					<p>2. To export all subscribers, leave all fields blank.</p>
 
-                    <div id="modules" class="postbox">
-
-                        <div class="inside">
+                    <div id="modules">
 
                         <table id="reporting_tool_table" class="reporting-tool-table form-table">
 
@@ -217,8 +215,11 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
 			                            <option value="active"><?php _e( 'Active', 'lp-reporting-tool' ); ?></option>
 			                            <option value="canceled"><?php _e( 'Canceled', 'lp-reporting-tool' ); ?></option>
 			                            <option value="deactivated"><?php _e( 'Deactivated', 'lp-reporting-tool' ); ?></option>
+										<option value="trial"><?php _e( 'Trial', 'lp-reporting-tool' ); ?></option>
 			                            <option value="expired"><?php _e( 'Expired', 'lp-reporting-tool' ); ?></option>
 			                        </select>
+
+									<p class="description">For more details on what Leaky Paywall payment statuses mean, <a target="_blank" href="https://docs.leakypaywall.com/article/70-i-have-an-expired-subscriber-that-has-an-active-status-can-they-get-access">please read our documentation</a>.
                                 </td>
                             </tr>
                         	<tr>
@@ -269,7 +270,7 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                             <input class="button-primary" type="submit" name="generate_leaky_paywall_report" value="<?php _e( 'Generate Report', 'lp-reporting-tool' ) ?>" />
                         </p>
 
-                        </div>
+                      
 
                     </div>
 
