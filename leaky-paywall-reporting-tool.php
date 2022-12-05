@@ -1,18 +1,18 @@
 <?php
 /**
- * Main PHP file used to for initial calls to zeen101's Leak Paywall Reporting Tool classes and functions.
+ * Main PHP file used to for initial calls to Leaky Paywall Reporting Tool classes and functions.
  *
- * @package zeen101's Leaky Paywall - Reporting Tool
+ * @package Leaky Paywall - Reporting Tool
  * @since 1.0.0
  */
 
 /*
 Plugin Name: Leaky Paywall - Reporting Tool
-Plugin URI: https://zeen101.com/
+Plugin URI: https://leakypaywall.com
 Description: An add-on for Leaky Paywall that adds the ability to export Leaky Paywall subscribers into a CSV file.
-Author: ZEEN101
-Version: 1.4.0
-Author URI: https://zeen101.com/
+Author: Leaky Paywall
+Version: 1.4.1
+Author URI: https://leakypaywall.com
 Tags: 
 */
 
@@ -22,7 +22,7 @@ if ( !defined( 'ZEEN101_STORE_URL' ) )
 
 define( 'LP_RT_NAME', 		'Leaky Paywall - Reporting Tool' );
 define( 'LP_RT_SLUG', 		'lp-reporting-tool' );
-define( 'LP_RT_VERSION', 	'1.4.0' );
+define( 'LP_RT_VERSION', 	'1.4.1' );
 define( 'LP_RT_DB_VERSION', '1.0.0' );
 define( 'LP_RT_URL', 		plugin_dir_url( __FILE__ ) );
 define( 'LP_RT_PATH', 		plugin_dir_path( __FILE__ ) );
@@ -65,6 +65,22 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 
 		}
 
+		// Upgrade function based on EDD updater class
+		if (!class_exists('EDD_LP_Plugin_Updater')) {
+			include(dirname(__FILE__) . '/includes/EDD_LP_Plugin_Updater.php');
+		}
+
+		$license = new Leaky_Paywall_License_Key(LP_RT_SLUG, LP_RT_NAME);
+
+		$settings = $license->get_settings();
+		$license_key = trim($settings['license_key']);
+		$edd_updater = new EDD_LP_Plugin_Updater(ZEEN101_STORE_URL, __FILE__, array(
+			'version' 	=> LP_RT_VERSION, // current version number
+			'license' 	=> $license_key,
+			'item_name' => LP_RT_NAME,
+			'author' 	=> 'Zeen101 Development Team'
+		));
+
 	} else {
 
 		add_action( 'admin_notices', 'leaky_paywall_reporting_tool_requirement_nag' );
@@ -72,7 +88,7 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 	}
 
 }
-add_action( 'plugins_loaded', 'leaky_paywall_reporting_tool_plugins_loaded', 4815162342 ); //wait for the plugins to be loaded before init
+add_action( 'plugins_loaded', 'leaky_paywall_reporting_tool_plugins_loaded', 48151623429 ); //wait for the plugins to be loaded before init
 
 function leaky_paywall_reporting_tool_requirement_nag() {
 	?>

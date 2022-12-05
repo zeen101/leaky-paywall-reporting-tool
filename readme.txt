@@ -1,9 +1,9 @@
 === Leaky Paywall - Reporting Tool ===
 Contributors: zeen101
 Tags: metered, paywall, leaky, wordpress, magazine, news, blog, articles, remaining
-Requires at least: 4.9.1
-Tested up to: 5.4.0
-Stable tag: 1.4.0
+Requires at least: 5.6
+Tested up to: 6.1.1
+Stable tag: 1.4.1
 
 An add-on for Leaky Paywall that adds the ability to export Leaky Paywall subscribers into a CSV file.
 
@@ -18,19 +18,24 @@ An add-on for Leaky Paywall that adds the ability to export Leaky Paywall subscr
 
 == Frequently Asked Questions ==
 
-= What are the minimum requirements for zeen101's Leaky Paywall - Reporting Tool =
+= What are the minimum requirements for Leaky Paywall - Reporting Tool =
 
 You must have:
 
-* WordPress 4.9.1 or later
-* PHP 5
-* zeen101's Leaky Paywall version 4.0.0 or later
+* WordPress 5.6 or later
+* PHP 7
+* Leaky Paywall version 4.0.0 or later
 
-= How is zeen101's Leaky Paywall Licensed? =
+= How is Leaky Paywall Licensed? =
 
 * Leaky Paywall - Reporting Tool is GPL
 
 == Changelog ==
+
+= 1.4.1 =
+* Update payment status label
+* Add new payment statuses
+* Allow back dating for expiration date picker
 
 = 1.4.0 =
 * Add created date range as a search parameter
