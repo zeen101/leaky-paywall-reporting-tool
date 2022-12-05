@@ -36,6 +36,7 @@ You must have:
 * Update payment status label
 * Add new payment statuses
 * Allow back dating for expiration date picker
+* Add EDD updater
 
 = 1.4.0 =
 * Add created date range as a search parameter
