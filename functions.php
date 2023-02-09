@@ -17,7 +17,8 @@ if ( !function_exists( 'leaky_paywall_reporting_tool_query' ) ){
 			$which_leaky_paywall = '_issuem';
 
 			$args = array(
-				'role__not_in'	=> 'administrator'
+				'role__not_in'	=> 'administrator',
+				'number' => 10
 			);
 
 			$settings = get_leaky_paywall_settings();
@@ -209,7 +210,7 @@ if ( !function_exists( 'get_leaky_user_meta' ) ) {
 			if ( is_numeric($meta) && (int)$meta == $meta ) { // is timestamp
 				$date = date( 'Y-M-d H:i:s', $meta );
 				$meta = $date;
-			} 
+			}
 		}
 
 

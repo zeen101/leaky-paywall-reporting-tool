@@ -13,7 +13,7 @@ Description: An add-on for Leaky Paywall that adds the ability to export Leaky P
 Author: Leaky Paywall
 Version: 1.4.1
 Author URI: https://leakypaywall.com
-Tags: 
+Tags:
 */
 
 //Define global variables...
@@ -41,7 +41,7 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 	if ( is_plugin_active( 'issuem-leaky-paywall/issuem-leaky-paywall.php' ) || is_plugin_active( 'leaky-paywall/leaky-paywall.php' ) ) {
 		$is_leaky_paywall = true;
 		$which_leaky_paywall = '_issuem';
-		
+
 	} else {
 		$is_leaky_paywall = false;
 		$which_leaky_paywall = '';
@@ -59,6 +59,8 @@ function leaky_paywall_reporting_tool_plugins_loaded() {
 			$leaky_paywall_reporting_tool = new Leaky_Paywall_Reporting_tool();
 
 			require_once( 'functions.php' );
+
+			include( dirname(__FILE__) . '/includes/export.php' );
 
 			//Internationalization
 			load_plugin_textdomain( 'lp-reporting-tool', false, LP_RT_REL_DIR . '/i18n/' );
