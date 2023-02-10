@@ -181,6 +181,8 @@ if ( ! class_exists( 'Leaky_Paywall_Reporting_tool' ) ) {
                             <input class="button-primary" type="submit" id="leaky-paywall-reporting-tool-submit" name="generate_leaky_paywall_report" value="<?php _e( 'Generate Report', 'lp-reporting-tool' ) ?>" />
                         </p>
 
+						<p id="leaky-paywall-reporting-tool-message"></p>
+
 
 
                     </div>

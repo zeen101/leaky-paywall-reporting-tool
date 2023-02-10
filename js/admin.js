@@ -44,21 +44,12 @@
 
 					$('#leaky-paywall-reporting-tool-submit').val('Processing...please wait');
 					$('#leaky-paywall-reporting-tool-submit').attr('disabled', true );
-
-					// $('#endo-bulk-change-subscription-loading-spinner').addClass('subscribers-processing');
-					// $('#endo-bulk-change-subscription-wrapper').html('<span>Processing...</span>');
-					// $('#endo-bulk-change-subscription-loading-spinner').after('<div class="endo-bulk-change-subscription-progress"><div></div></div>');
-
-					var email = $('#subscriber_email').val();
-					var subscriber_level = $('#subscriber_level').children('option:selected').val();
-					var product_id = $('#product_id').val();
-					var subscriber_note = $('#subscriber_note').val();
+					$('#leaky-paywall-reporting-tool-message').text('Do not close this window.  Large datasets can take a while to process.');
 
 					const formData = $("#leaky-paywall-reporting-tool-form").serialize();
 
 					const data = {
 						formData: formData,
-						// nonce: leaky_paywall_validate_ajax.register_nonce
 					};
 
 					self.process_step( 1, data, self );
@@ -80,33 +71,26 @@
 					dataType: 'json',
 					success: function( response ) {
 
-						console.log(response);
-
 						if ( 'done' == response.step ) {
 
 							console.log('done - download');
-
 							$('#leaky-paywall-reporting-tool-submit').val('Processing complete');
 
-
-							window.location = response.url;
-
-
-
-							// $( "#endo-bulk-change-subscription-wrapper" ).after( "<div class='notice notice-success'><p>Subscribers Processed</p></div>" ).remove();
-							// $('#endo-bulk-change-subscription-loading-spinner').removeClass('subscribers-processing');
-							// $('.endo-bulk-change-subscription-progress').remove();
+							if ( response.url == 'none' ) {
+								console.log('No subscribers match your parameters.');
+								$('#leaky-paywall-reporting-tool-submit').val('Generate Report');
+								$('#leaky-paywall-reporting-tool-submit').attr('disabled', false );
+								$('#leaky-paywall-reporting-tool-message').text('No subscribers match your parameters.');
+							} else {
+								window.location = response.url;
+								$('#leaky-paywall-reporting-tool-submit').val('Generate Report');
+								$('#leaky-paywall-reporting-tool-submit').attr('disabled', false );
+								$('#leaky-paywall-reporting-tool-message').text('Processing complete.');
+							}
 
 						} else {
 
 							console.log('continue processing');
-
-							// $('.endo-bulk-change-subscription-progress div').animate({
-							// 	width: response.percentage + '%',
-							// }, 50, function() {
-							// 	// animation complete
-							// });
-
 							self.process_step( parseInt( response.step ), data, self );
 
 						}

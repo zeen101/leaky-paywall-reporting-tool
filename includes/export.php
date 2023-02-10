@@ -8,8 +8,6 @@ class Leaky_Paywall_Reporting_Tool_Export
 
     public function __construct()
     {
-     //   add_action('admin_init', array( $this, 'process_requests' ), 15);
-
         add_action('wp_ajax_leaky_paywall_reporting_tool_process', array( $this, 'process_requests') );
     }
 
@@ -84,63 +82,52 @@ class Leaky_Paywall_Reporting_Tool_Export
 
             if (!empty($user_meta)) {
                 $this->export_file( $user_meta, $step );
-                die();
             }
+
         } else {
 
-            $upload_dir       = wp_get_upload_dir();
-            $filename = str_replace( 'http://', 'https://', trailingslashit($upload_dir['baseurl']) ) . 'leaky-paywall-report-' . wp_hash(home_url('/')) . '.csv';
+            if ( $step == 1 ) {
+                // no users found for query
+                $response = array(
+                    'step'        => 'done',
+                    'url'   => 'none'
+                );
+            } else {
+                // no more users to export
+                $upload_dir       = wp_get_upload_dir();
+                $filename = str_replace('http://', 'https://', trailingslashit($upload_dir['baseurl'])) . 'leaky-paywall-report-' . wp_hash(home_url('/')) . '.csv';
 
-            $response = array(
-                'step'        => 'done',
-                'url'   => $filename
-            );
+                $response = array(
+                    'step'        => 'done',
+                    'url'   => $filename
+                );
+            }
+
             echo json_encode($response);
             exit;
         }
     }
 
-    public function export_headers() {
-
-        // $now = gmdate("D, d M Y H:i:s");
-        $filename = 'leaky-paywall-report-' . time() . '.csv';
-
-
-
-        // header('Expires: Tue, 03 Jul 2001 06:00:00 GMT');
-        // header('Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate ');
-        // header('Last-Modified: ' . $now . ' GMT ');
-
-        // // force download
-        // header('Content-Type: application/force-download');
-        // header('Content-Type: application/octet-stream');
-        // header('Content-Type: application/download');
-
-        // // disposition / encoding on response body
-        // header('Content-Disposition: attachment;filename="' . $filename . '"');
-        // header('Content-Transfer-Encoding: binary');
-
-    }
-
     public function export_file( $content_array, $step ) {
 
         header("Content-type: text/csv");
-        $upload_dir       = wp_get_upload_dir();
+        $upload_dir = wp_get_upload_dir();
         $filename = trailingslashit($upload_dir['basedir']) . 'leaky-paywall-report-' . wp_hash(home_url('/')) . '.csv';
 
         if ($step == 1) {
-            $f = fopen($filename, 'w');
-        //    $this->export_headers();
+            unlink( $filename ); // remove any existing file
+            $f = fopen($filename, 'w'); // create file
         } else {
-            $f = fopen($filename, 'a');
+            $f = fopen($filename, 'a'); // append to file
         }
 
-        fputcsv($f, array_keys(reset($content_array)));
+        fputcsv($f, array_keys(reset($content_array))); // header row
+
         foreach ($content_array as $row) {
             fputcsv($f, $row);
         }
-        fclose($f);
 
+        fclose($f);
 
         $response = array(
             'step'        => $step += 1,
@@ -261,6 +248,7 @@ class Leaky_Paywall_Reporting_Tool_Export
             }
         }
 
+        $args['meta_query']['relation'] = 'AND';
         $args = apply_filters('leaky_paywall_reporting_tool_pre_users', $args, $mode, '_issuem');
         $users = get_users($args);
         return $users;
