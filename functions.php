@@ -26,11 +26,19 @@ if ( !function_exists( 'get_leaky_user_meta' ) ) {
 
 		// If that returned nothing, try for an un-prefixed meta string
 		if ( empty( $meta ) ){
-				$meta = get_user_meta( $user_id, $which_leaky_paywall . $key . '_all', true);
+			$meta = get_user_meta( $user_id, $which_leaky_paywall . $key . '_all', true);
 
-			if( empty( $meta ) ){
-			$meta = get_user_meta( $user_id, $key, true );
+			if ( empty( $meta ) ){
+				$meta = get_user_meta( $user_id, $key, true );
 			}
+		}
+
+		if ( $key == '_leaky_paywall_' . $mode . '_level_id' ) {
+
+			if ( !$meta ) {
+				$meta = 0;  // level id of zero
+			}
+
 		}
 
 		if ( $key == '_leaky_paywall_' . $mode . '_created' ) {
