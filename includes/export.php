@@ -31,6 +31,7 @@ class Leaky_Paywall_Reporting_Tool_Export
         $mode = leaky_paywall_get_current_mode();
         $site = leaky_paywall_get_current_site();
         $step = $_POST['step'];
+        $rand = absint($_POST['rand']);
 
         if ( $step == 'done' ) {
             die('we are done');
@@ -81,7 +82,7 @@ class Leaky_Paywall_Reporting_Tool_Export
             }
 
             if (!empty($user_meta)) {
-                $this->export_file( $user_meta, $step );
+                $this->export_file( $user_meta, $step, $rand );
             }
 
         } else {
@@ -93,9 +94,12 @@ class Leaky_Paywall_Reporting_Tool_Export
                     'url'   => 'none'
                 );
             } else {
+
+                $uploads_dir = trailingslashit(wp_upload_dir()['baseurl']) . 'leaky-paywall';
+
                 // no more users to export
-                $upload_dir       = wp_get_upload_dir();
-                $filename = str_replace('http://', 'https://', trailingslashit($upload_dir['baseurl'])) . 'leaky-paywall-report-' . wp_hash(home_url('/')) . '.csv';
+                // $upload_dir       = wp_get_upload_dir();
+                $filename = str_replace('http://', 'https://', $uploads_dir . '/leaky-paywall-report-' . $rand . '-' . wp_hash(home_url('/'))) . '.csv';
 
                 $response = array(
                     'step'        => 'done',
@@ -108,16 +112,25 @@ class Leaky_Paywall_Reporting_Tool_Export
         }
     }
 
-    public function export_file( $content_array, $step ) {
+    public function export_file( $content_array, $step, $rand ) {
 
         header("Content-type: text/csv");
-        $upload_dir = wp_get_upload_dir();
-        $filename = trailingslashit($upload_dir['basedir']) . 'leaky-paywall-report-' . wp_hash(home_url('/')) . '.csv';
+        $uploads_dir = trailingslashit(wp_upload_dir()['basedir']) . 'leaky-paywall';
 
         if ($step == 1) {
-            unlink( $filename ); // remove any existing file
+
+            if (!is_dir($uploads_dir)) {
+                wp_mkdir_p($uploads_dir);
+            }
+
+            $filename = $uploads_dir . '/leaky-paywall-report-' . $rand . '-' . wp_hash(home_url('/')) . '.csv';
+
             $f = fopen($filename, 'w'); // create file
+
         } else {
+
+            $filename = $uploads_dir . '/leaky-paywall-report-' . $rand . '-' . wp_hash(home_url('/')) . '.csv';
+
             $f = fopen($filename, 'a'); // append to file
         }
 
