@@ -164,10 +164,11 @@ class Leaky_Paywall_Reporting_Tool_Export
         );
 
         $mode = leaky_paywall_get_current_mode();
+        $site = leaky_paywall_get_current_site();
 
         if (!empty($fields['expire_start'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_expires',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_expires' . $site,
                 'value'   => date('Y-m-d 23:59:59', strtotime($fields['expire_start'])),
                 'type'    => 'DATE',
                 'compare' => '>='
@@ -175,7 +176,7 @@ class Leaky_Paywall_Reporting_Tool_Export
         }
         if (!empty($fields['expire_end'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_expires',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_expires' . $site,
                 'value'   => date('Y-m-d 23:59:59', strtotime($fields['expire_end'])),
                 'type'    => 'DATE',
                 'compare' => '<='
@@ -184,7 +185,7 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         if (!empty($fields['created_start'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_created',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_created' . $site,
                 'value'   => date('Y-m-d 23:59:59', strtotime($fields['created_start'])),
                 'type'    => 'DATE',
                 'compare' => '>='
@@ -193,7 +194,7 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         if (!empty($fields['created_end'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_created',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_created' . $site,
                 'value'   => date('Y-m-d 23:59:59', strtotime($fields['created_end'])),
                 'type'    => 'DATE',
                 'compare' => '<='
@@ -202,14 +203,14 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         if (!empty($fields['subscription_level'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_level_id',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_level_id' . $site,
                 'value'   => $fields['subscription_level'],
                 'type'    => 'NUMERIC',
                 'compare' => 'IN'
             );
         } else {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_level_id',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_level_id' . $site,
                 'compare' => 'EXISTS'
             );
         }
@@ -217,7 +218,7 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         if ( !empty($fields['subscriber_status']) ) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_status',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_status' . $site,
                 'value'   => $fields['subscriber_status'],
                 'type'    => 'CHAR',
                 'compare' => 'IN'
@@ -226,13 +227,13 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         if (!empty($fields['price'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_price',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_price' . $site,
                 'value'   => $fields['price'],
             );
         }
         if (!empty($fields['payment_method'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_gateway',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_payment_gateway' . $site,
                 'value'   => $fields['payment_method'],
                 'type'    => 'CHAR',
                 'compare' => 'IN'
@@ -240,7 +241,7 @@ class Leaky_Paywall_Reporting_Tool_Export
         }
         if (!empty($fields['subscriber_id'])) {
             $args['meta_query'][] = array(
-                'key'     => '_issuem_leaky_paywall_' . $mode . '_subscriber_id',
+                'key'     => '_issuem_leaky_paywall_' . $mode . '_subscriber_id' . $site,
                 'value'   => $fields['subscriber_id'],
                 'compare' => 'LIKE',
             );
