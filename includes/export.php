@@ -71,6 +71,13 @@ class Leaky_Paywall_Reporting_Tool_Export
                 foreach ($meta as $key) {
                     $user_meta[$user->ID][$key] = get_leaky_user_meta($user->ID, '_leaky_paywall_' . $mode . '_' . $key . $site);
                 }
+
+                if ( leaky_paywall_user_has_access($user) ) {
+                    $user_meta[$user->ID]['has_access'] = 'yes';
+                } else {
+                    $user_meta[$user->ID]['has_access'] = 'no';
+                }
+
                 if (!empty($custom_meta_fields['meta_keys'])) {
 
                     foreach ($custom_meta_fields['meta_keys'] as $meta_key) {
@@ -246,6 +253,14 @@ class Leaky_Paywall_Reporting_Tool_Export
                 'compare' => 'LIKE',
             );
         }
+
+        if (!empty($fields['gift_subscriptions']) && $fields['gift_subscriptions'] > 0) {
+            $args['meta_query'][] = array(
+                'key'     => '_leaky_paywall_gift_subscription_code',
+                'compare' => 'EXISTS',
+            );
+        }
+
         if (!empty($fields['custom-meta-key'])) {
             foreach ($fields['custom-meta-key'] as $meta_key => $value) {
                 if (
