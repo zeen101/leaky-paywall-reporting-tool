@@ -86,10 +86,15 @@
 								$('#leaky-paywall-reporting-tool-message').text('No subscribers match your parameters.');
 							} else {
 
-							 	window.location = response.url;
+								window.location = response.url;
 								$('#leaky-paywall-reporting-tool-submit').val('Generate Report');
 								$('#leaky-paywall-reporting-tool-submit').attr('disabled', false );
+								// $('#leaky-paywall-reporting-tool-submit').hide();
 								$('#leaky-paywall-reporting-tool-message').text('Processing complete.');
+
+							//	$('<a class="button-primary" href="' + response.url + '">Click to Download Report</a></p>').insertAfter( $('#leaky-paywall-reporting-tool-submit') );
+
+
 							}
 
 						} else {

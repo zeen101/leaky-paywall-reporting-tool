@@ -32,8 +32,11 @@ if (!class_exists('Leaky_Paywall_Reporting_tool')) {
 
 		public function admin_wp_enqueue_scripts($hook_suffix)
 		{
-			if ('leaky-paywall_page_reporting-tool' === $hook_suffix)
-				wp_enqueue_script('lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array('jquery', 'jquery-ui-datepicker'), LP_RT_VERSION);
+			if ('leaky-paywall_page_reporting-tool' === $hook_suffix) {
+				// wp_enqueue_script('lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array('jquery', 'jquery-ui-datepicker'), LP_RT_VERSION);
+				wp_enqueue_script('lp_reporting_tool_admin_js', LP_RT_URL . 'js/admin.js', array('jquery', 'jquery-ui-datepicker'), '5');
+			}
+
 		}
 
 		public function admin_wp_print_styles()
@@ -101,7 +104,8 @@ if (!class_exists('Leaky_Paywall_Reporting_tool')) {
 												&nbsp; &mdash; &nbsp;
 												<input type="text" id="expire-end" name="expire_end" value="" />
 												<?php
-												$date_format = get_option('date_format');
+												// $date_format = get_option('date_format');
+												$date_format = 'F j, Y';
 												$jquery_date_format = leaky_paywall_jquery_datepicker_format($date_format);
 												?>
 												<input type="hidden" name="date_format" value="<?php echo $jquery_date_format; ?>" />
