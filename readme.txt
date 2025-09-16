@@ -2,8 +2,8 @@
 Contributors: zeen101
 Tags: metered, paywall, leaky, wordpress, magazine, news, blog, articles, remaining
 Requires at least: 5.6
-Tested up to: 6.4.1
-Stable tag: 1.4.5
+Tested up to: 6.8.2
+Stable tag: 1.4.6
 
 An add-on for Leaky Paywall that adds the ability to export Leaky Paywall subscribers into a CSV file.
 
@@ -31,6 +31,9 @@ You must have:
 * Leaky Paywall - Reporting Tool is GPL
 
 == Changelog ==
+
+= 1.4.6 =
+* Update date picker format
 
 = 1.4.5 =
 * Add column for Has Access
