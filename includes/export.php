@@ -144,6 +144,13 @@ class Leaky_Paywall_Reporting_Tool_Export
         fputcsv($f, array_keys(reset($content_array))); // header row
 
         foreach ($content_array as $row) {
+            $row = array_map(function($value) {
+                // Preserve leading zeros for numeric strings (e.g., zip codes)
+                if (is_string($value) && preg_match('/^0\d+$/', $value)) {
+                    return '="' . $value . '"';
+                }
+                return $value;
+            }, $row);
             fputcsv($f, $row);
         }
 
