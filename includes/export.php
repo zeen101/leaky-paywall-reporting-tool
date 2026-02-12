@@ -26,6 +26,10 @@ class Leaky_Paywall_Reporting_Tool_Export
             return;
         }
 
+        if (!current_user_can(apply_filters('manage_leaky_paywall_settings', 'manage_options'))) {
+            return;
+        }
+
         global $no_lp_subscribers;
         $no_lp_subscribers = false;
         $mode = leaky_paywall_get_current_mode();
