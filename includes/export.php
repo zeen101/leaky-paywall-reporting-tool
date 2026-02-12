@@ -141,7 +141,9 @@ class Leaky_Paywall_Reporting_Tool_Export
             $f = fopen($filename, 'a'); // append to file
         }
 
-        fputcsv($f, array_keys(reset($content_array))); // header row
+        if ($step == 1) {
+            fputcsv($f, array_keys(reset($content_array))); // header row
+        }
 
         foreach ($content_array as $row) {
             $row = array_map(function($value) {
