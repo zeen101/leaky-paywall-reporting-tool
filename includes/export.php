@@ -34,7 +34,7 @@ class Leaky_Paywall_Reporting_Tool_Export
         $no_lp_subscribers = false;
         $mode = leaky_paywall_get_current_mode();
         $site = leaky_paywall_get_current_site();
-        $step = $_POST['step'];
+        $step = sanitize_text_field( $_POST['step'] );
         $rand = absint($_POST['rand']);
 
         if ( $step == 'done' ) {
@@ -58,6 +58,7 @@ class Leaky_Paywall_Reporting_Tool_Export
 
         $meta = apply_filters('leaky_paywall_reporting_tool_meta', $meta);
 
+        $custom_meta_fields = array();
         if (is_plugin_active('leaky-paywall-custom-subscriber-fields/issuem-leaky-paywall-subscriber-meta.php')) {
             global $dl_pluginissuem_leaky_paywall_subscriber_meta;
             $custom_meta_fields = $dl_pluginissuem_leaky_paywall_subscriber_meta->get_settings();
